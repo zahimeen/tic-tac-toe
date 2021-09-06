@@ -51,9 +51,9 @@ body {
     top: 85vh;
     left: 50vw;
     transform: translate(-50%, -50%);
-    width: 30vw;
+    width: calc(50vh / 2.5);
     height: 10vh;
-    font-size: 4vw;
+    font-size: calc(50vh / 16);
     color: #fff;
     background-color: #e06c75;
     border: none;
