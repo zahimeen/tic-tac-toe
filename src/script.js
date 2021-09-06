@@ -15,10 +15,15 @@ const newGame = function () {
 newGame();
 
 const setPosition = function (posEl, posX, posY) {
-    const newVal = currentPlayer ? 0 : 1;
-    board[posX][posY] = players[currentPlayer];
-    posEl.textContent = players[currentPlayer];
-    currentPlayer = newVal;
+    const isBlankPos = board[posX][posY] === "";
+    if (isBlankPos) {
+        const newVal = currentPlayer ? 0 : 1;
+        board[posX][posY] = players[currentPlayer];
+        posEl.textContent = players[currentPlayer];
+        currentPlayer = newVal;
+        return;
+    }
+    alert("This position is occupied!");
 };
 
 const positionSelected = function (posEl) {
