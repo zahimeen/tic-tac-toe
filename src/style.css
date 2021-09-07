@@ -32,7 +32,7 @@ body {
     color: #eef;
     background-color: #81a1c1;
     border: 1px solid #282c34;
-    font-style: italic;
+    font-style: bold;
     font-size: calc(50vh / 4);
 }
 
@@ -53,7 +53,8 @@ body {
     transform: translate(-50%, -50%);
     width: calc(50vh / 2.5);
     height: 10vh;
-    font-size: calc(50vh / 16);
+    font-family: cursive;
+    font-size: calc(50vh / 17);
     color: #fff;
     background-color: #e06c75;
     border: none;
@@ -68,4 +69,14 @@ body {
 .new-game-btn:active {
     box-shadow: 3px 3px 5px #1e2127;
     transform: translate(-48%, -48%);
+}
+
+.message {
+    color: #dea0f0;
+    font-family: cursive;
+    font-size: 2.5vw;
+    position: absolute;
+    top: 15vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
 }

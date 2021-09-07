@@ -1,8 +1,11 @@
 const boardEl = document.querySelectorAll(".board-pos");
 const newGameBtnEl = document.querySelector(".new-game-btn");
+const messageEl = document.querySelector(".message");
 const players = ["X", "O"];
-let currentPlayer, board;
 
+const setMessage = (msg) => (messageEl.textContent = msg);
+
+let currentPlayer, board;
 const newGame = function () {
     currentPlayer = 0;
     board = [
@@ -11,6 +14,7 @@ const newGame = function () {
         ["", "", ""],
     ];
     for (const pos of boardEl) pos.textContent = "";
+    setMessage("It is Player X's Turn");
 };
 newGame();
 
@@ -21,9 +25,10 @@ const setPosition = function (posEl, posX, posY) {
         board[posX][posY] = players[currentPlayer];
         posEl.textContent = players[currentPlayer];
         currentPlayer = newVal;
+        setMessage(`It is Player ${players[newVal]}'s Turn`);
         return;
     }
-    alert("This position is occupied!");
+    setMessage("This position is occupied!");
 };
 
 const positionSelected = function (posEl) {
