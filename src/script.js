@@ -2,21 +2,22 @@ const boardEl = document.querySelectorAll(".board-pos");
 const newGameBtnEl = document.querySelector(".new-game-btn");
 const messageEl = document.querySelector(".message");
 const players = ["X", "O"];
+let currentPlayer, disabledButtons, board;
 
 const setMessage = (msg) => (messageEl.textContent = msg);
 
-let currentPlayer, board;
-const newGame = function () {
-    currentPlayer = 0;
-    board = [
-        ["", "", ""],
-        ["", "", ""],
-        ["", "", ""],
-    ];
-    for (const pos of boardEl) pos.textContent = "";
-    setMessage("It is Player X's Turn");
+const positionSelected = function () {
+    const [strPosY, strPosX] = this.id.split(",");
+    const [posX, posY] = [Number(strPosX), Number(strPosY)];
+    setPosition(this, posX, posY);
 };
-newGame();
+
+const disableButtons = function () {
+    for (const pos of boardEl) {
+        pos.removeEventListener("click", positionSelected);
+    }
+    disabledButtons = true;
+};
 
 const setPosition = function (posEl, posX, posY) {
     const isBlankPos = board[posX][posY] === "";
@@ -31,13 +32,22 @@ const setPosition = function (posEl, posX, posY) {
     setMessage("This position is occupied!");
 };
 
-const positionSelected = function (posEl) {
-    const [strPosY, strPosX] = posEl.id.split(",");
-    const [posX, posY] = [Number(strPosX), Number(strPosY)];
-    setPosition(posEl, posX, posY);
+const newGame = function () {
+    currentPlayer = 0;
+    disabledButtons = false;
+    board = [
+        ["", "", ""],
+        ["", "", ""],
+        ["", "", ""],
+    ];
+    for (const pos of boardEl) pos.textContent = "";
+    if (!disabledButtons) {
+        for (const pos of boardEl) {
+            pos.addEventListener("click", positionSelected);
+        }
+    }
+    setMessage("It is Player X's Turn");
 };
+newGame();
 
 newGameBtnEl.addEventListener("click", newGame);
-
-for (const pos of boardEl)
-    pos.addEventListener("click", () => positionSelected(pos));
