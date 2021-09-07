@@ -24,20 +24,25 @@ const getGameStatus = function () {
     if (turnsTaken >= 9) return { msg: "Draw!", isFinished: true };
 };
 
+const setGameStatus = function (newPlayer) {
+    const gameStatus = getGameStatus();
+    if (gameStatus.isFinished) {
+        disableButtons();
+        setMessage(gameStatus.msg);
+        return;
+    }
+    setMessage(`It is Player ${players[newPlayer]}'s Turn`);
+};
+
 const setPosition = function (posEl, posX, posY) {
     const isBlankPos = board[posX][posY] === "";
     if (isBlankPos) {
-        const newVal = currentPlayer ? 0 : 1;
+        const newPlayer = currentPlayer ? 0 : 1;
         board[posX][posY] = players[currentPlayer];
         posEl.textContent = players[currentPlayer];
-        currentPlayer = newVal;
+        currentPlayer = newPlayer;
         turnsTaken += 1;
-        setMessage(`It is Player ${players[newVal]}'s Turn`);
-        const gameStatus = getGameStatus();
-        if (gameStatus.isFinished) {
-            disableButtons();
-            setMessage(gameStatus.msg);
-        }
+        setGameStatus(newPlayer);
         return;
     }
     setMessage("This position is occupied!");
