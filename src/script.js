@@ -2,7 +2,7 @@ const boardEl = document.querySelectorAll(".board-pos");
 const newGameBtnEl = document.querySelector(".new-game-btn");
 const messageEl = document.querySelector(".message");
 const players = ["X", "O"];
-let currentPlayer, disabledButtons, board;
+let currentPlayer, disabledButtons, turnsTaken, board;
 
 const setMessage = (msg) => (messageEl.textContent = msg);
 
@@ -19,6 +19,11 @@ const disableButtons = function () {
     disabledButtons = true;
 };
 
+const getGameStatus = function () {
+    if (turnsTaken < 5) return { msg: "", isFinished: false };
+    if (turnsTaken >= 9) return { msg: "Draw!", isFinished: true };
+};
+
 const setPosition = function (posEl, posX, posY) {
     const isBlankPos = board[posX][posY] === "";
     if (isBlankPos) {
@@ -26,7 +31,13 @@ const setPosition = function (posEl, posX, posY) {
         board[posX][posY] = players[currentPlayer];
         posEl.textContent = players[currentPlayer];
         currentPlayer = newVal;
+        turnsTaken += 1;
         setMessage(`It is Player ${players[newVal]}'s Turn`);
+        const gameStatus = getGameStatus();
+        if (gameStatus.isFinished) {
+            disableButtons();
+            setMessage(gameStatus.msg);
+        }
         return;
     }
     setMessage("This position is occupied!");
@@ -35,6 +46,7 @@ const setPosition = function (posEl, posX, posY) {
 const newGame = function () {
     currentPlayer = 0;
     disabledButtons = false;
+    turnsTaken = 0;
     board = [
         ["", "", ""],
         ["", "", ""],
