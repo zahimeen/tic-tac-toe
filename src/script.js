@@ -13,19 +13,24 @@ const isThreeInARow = function (desiredValue, values) {
     return true;
 };
 
-const isVerticalWin = function (playerVal, posX) {
-    const vals = [];
-    for (let posY = 0; posY < 3; posY++) {
-        const val = board[posY][posX];
-        vals.push(val);
+const isPlayerWin = function (playerVal, thisPosX, thisPosY) {
+    const horVals = [];
+    const verVals = [];
+    for (let i = 0; i < 3; i++) {
+        const horVal = board[i][thisPosX];
+        const verVal = board[thisPosY][i];
+        horVals.push(horVal);
+        verVals.push(verVal);
     }
-    return isThreeInARow(playerVal, vals);
+    return (
+        isThreeInARow(playerVal, horVals) || isThreeInARow(playerVal, verVals)
+    );
 };
 
 const getGameStatus = function (playerVal, posX, posY) {
     if (turnsTaken < 5) return { msg: "", isFinished: false };
 
-    if (isVerticalWin(playerVal, posX))
+    if (isPlayerWin(playerVal, posX, posY))
         return { msg: `Player ${playerVal} Wins!`, isFinished: true };
 
     if (turnsTaken >= 9) return { msg: "Draw!", isFinished: true };
