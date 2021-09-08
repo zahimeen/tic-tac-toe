@@ -13,22 +13,38 @@ const isThreeInARow = function (desiredValue, values) {
     return true;
 };
 
+const highlightPositions = function (coords) {
+    for (const coord of coords) {
+        const posEl = document.querySelector(`#c${coord[0]}${coord[1]}`);
+        posEl.classList.add("winning-move");
+    }
+    return true;
+};
+
 const isWinningMove = function (playerVal, thisPosX, thisPosY) {
-    const horVals = [];
-    const verVals = [];
-    const posDiaVals = [];
-    const negDiaVals = [];
+    const ver = { coords: [], vals: [] };
+    const hor = { coords: [], vals: [] };
+    const posDia = { coords: [], vals: [] };
+    const negDia = { coords: [], vals: [] };
     for (let i = 0; i < 3; i++) {
-        horVals.push(board[i][thisPosX]);
-        verVals.push(board[thisPosY][i]);
-        posDiaVals.push(board[2 - i][i]);
-        negDiaVals.push(board[2 - i][2 - i]);
+        hor.vals.push(board[i][thisPosX]);
+        ver.vals.push(board[thisPosY][i]);
+        posDia.vals.push(board[2 - i][i]);
+        negDia.vals.push(board[2 - i][2 - i]);
+        hor.coords.push([i, thisPosX]);
+        ver.coords.push([thisPosY, i]);
+        posDia.coords.push([2 - i, 2 - i]);
+        negDia.coords.push([2 - i, i]);
     }
     return (
-        isThreeInARow(playerVal, horVals) ||
-        isThreeInARow(playerVal, verVals) ||
-        isThreeInARow(playerVal, posDiaVals) ||
-        isThreeInARow(playerVal, negDiaVals)
+        (isThreeInARow(playerVal, hor.vals) &&
+            highlightPositions(hor.coords)) ||
+        (isThreeInARow(playerVal, ver.vals) &&
+            highlightPositions(ver.coords)) ||
+        (isThreeInARow(playerVal, posDia.vals) &&
+            highlightPositions(negDia.coords)) ||
+        (isThreeInARow(playerVal, negDia.vals) &&
+            highlightPositions(posDia.coords))
     );
 };
 
@@ -67,7 +83,7 @@ const setPosition = function (posEl, posX, posY) {
 };
 
 const positionSelected = function () {
-    const [strPosY, strPosX] = this.id.split(",");
+    const [strPosY, strPosX] = [this.id[1], this.id[2]];
     const [posX, posY] = [Number(strPosX), Number(strPosY)];
     setPosition(this, posX, posY);
 };
@@ -90,8 +106,9 @@ const newGame = function () {
     ];
     for (const pos of boardEl) pos.textContent = "";
     if (!disabledButtons) {
-        for (const pos of boardEl) {
-            pos.addEventListener("click", positionSelected);
+        for (const posEl of boardEl) {
+            posEl.addEventListener("click", positionSelected);
+            posEl.classList.remove("winning-move");
         }
     }
     setMessage("It is Player X's Turn");
