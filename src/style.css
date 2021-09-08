@@ -38,12 +38,12 @@ body {
 
 .board-pos:hover {
     background-color: #3c5e80;
-    border: 2px solid #282c34;
+    border: 2px solid #1e2127;
 }
 
 .board-pos:active {
-    background-color: #0d131f;
-    border: 6px solid #282c34;
+    background-color: #3c5e80;
+    border: 6px solid #1e2127;
 }
 
 .new-game-btn {
@@ -82,5 +82,9 @@ body {
 }
 
 .winning-move {
+    background-color: #98c379;
+}
+
+.winning-move:hover {
     background-color: #98c379;
 }
