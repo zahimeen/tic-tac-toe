@@ -13,24 +13,29 @@ const isThreeInARow = function (desiredValue, values) {
     return true;
 };
 
-const isPlayerWin = function (playerVal, thisPosX, thisPosY) {
+const isWinningMove = function (playerVal, thisPosX, thisPosY) {
     const horVals = [];
     const verVals = [];
+    const posDiaVals = [];
+    const negDiaVals = [];
     for (let i = 0; i < 3; i++) {
-        const horVal = board[i][thisPosX];
-        const verVal = board[thisPosY][i];
-        horVals.push(horVal);
-        verVals.push(verVal);
+        horVals.push(board[i][thisPosX]);
+        verVals.push(board[thisPosY][i]);
+        posDiaVals.push(board[2 - i][i]);
+        negDiaVals.push(board[2 - i][2 - i]);
     }
     return (
-        isThreeInARow(playerVal, horVals) || isThreeInARow(playerVal, verVals)
+        isThreeInARow(playerVal, horVals) ||
+        isThreeInARow(playerVal, verVals) ||
+        isThreeInARow(playerVal, posDiaVals) ||
+        isThreeInARow(playerVal, negDiaVals)
     );
 };
 
 const getGameStatus = function (playerVal, posX, posY) {
     if (turnsTaken < 5) return { msg: "", isFinished: false };
 
-    if (isPlayerWin(playerVal, posX, posY))
+    if (isWinningMove(playerVal, posX, posY))
         return { msg: `Player ${playerVal} Wins!`, isFinished: true };
 
     if (turnsTaken >= 9) return { msg: "Draw!", isFinished: true };
