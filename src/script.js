@@ -56,7 +56,12 @@ const getGameStatus = function (playerVal, posX, posY) {
     if (isWinningMove(playerVal, posX, posY))
         return { msg: `Player ${playerVal} Wins!`, isFinished: true };
 
-    if (turnsTaken >= 9) return { msg: "Draw!", isFinished: true };
+    if (turnsTaken >= 9) {
+        for (const pos of boardEl) {
+            pos.classList.add("draw");
+        }
+        return { msg: "Draw!", isFinished: true };
+    }
     return { msg: "", isFinished: false };
 };
 
@@ -115,6 +120,7 @@ const newGame = function () {
         for (const posEl of boardEl) {
             posEl.addEventListener("click", positionSelected);
             posEl.classList.remove("winning-move");
+            posEl.classList.remove("draw");
         }
     }
     setMessage("It is Player X's Turn");

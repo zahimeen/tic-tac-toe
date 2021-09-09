@@ -103,3 +103,11 @@ body {
     display: inline;
     margin: 0.5vw;
 }
+
+.draw {
+    background-color: #e5c07b;
+}
+
+.draw:active {
+    background-color: #e5c07b;
+}
