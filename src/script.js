@@ -2,6 +2,8 @@ const boardEl = document.querySelectorAll(".board-pos");
 const newGameBtnEl = document.querySelector(".new-game-btn");
 const messageEl = document.querySelector(".message");
 const players = ["X", "O"];
+const scores = [0, 0];
+const scoresEl = document.querySelectorAll(".score");
 let currentPlayer, disabledButtons, turnsTaken, board;
 
 const setMessage = (msg) => (messageEl.textContent = msg);
@@ -63,6 +65,10 @@ const setGameStatus = function (newPlayer, posX, posY) {
     if (gameStatus.isFinished) {
         disableButtons();
         setMessage(gameStatus.msg);
+        scores[currentPlayer] += 1;
+        scoresEl[currentPlayer].textContent = `Player ${currentPlayer + 1}: ${
+            scores[currentPlayer]
+        }`;
         return;
     }
     setMessage(`It is Player ${players[newPlayer]}'s Turn`);

@@ -88,3 +88,18 @@ body {
 .winning-move:hover {
     background-color: #98c379;
 }
+
+.scores {
+    position: absolute;
+    top: 6vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+}
+
+.score {
+    color: #ffffff;
+    font-family: cursive;
+    font-size: 1.5vw;
+    display: inline;
+    margin: 0.5vw;
+}
