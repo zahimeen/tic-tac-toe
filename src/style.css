@@ -108,6 +108,10 @@ body {
     background-color: #e5c07b;
 }
 
+.draw:hover {
+    background-color: #e5c07b;
+}
+
 .draw:active {
     background-color: #e5c07b;
 }
