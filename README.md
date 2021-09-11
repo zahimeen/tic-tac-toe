@@ -16,3 +16,7 @@ A project like this came about into my head while I was learning JavaScript. I t
 - [ ] Choose player names
 - [ ] Option to player against computer
 - [ ] Customize board size and winning length 
+
+## License
+
+[MIT License](./LICENSE)
