@@ -1,58 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Simple Tic Tac Toe</title>
+        <title>Tic Tac Toe</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="style.css" rel="stylesheet" />
     </head>
-
     <body>
-        <div class="scores">
-            <p class="score score-0">Player 1: 0</p>
-            <p class="score score-1">Player 2: 0</p>
-        </div>
-        <p class="message">Message</p>
-        <div class="board">
-            <button
-                type="button"
-                class="board-pos"
-                id="c00"
-                style="border-top-left-radius: 50px"
-            >
-                X
-            </button>
-            <button type="button" class="board-pos" id="c01">O</button>
-            <button
-                type="button"
-                class="board-pos"
-                id="c02"
-                style="border-top-right-radius: 50px"
-            >
-                X
-            </button>
-            <button type="button" class="board-pos" id="c10">O</button>
-            <button type="button" class="board-pos" id="c11">X</button>
-            <button type="button" class="board-pos" id="c12">O</button>
-            <button
-                type="button"
-                class="board-pos"
-                id="c20"
-                style="border-bottom-left-radius: 50px"
-            >
-                X
-            </button>
-            <button type="button" class="board-pos" id="c21">O</button>
-            <button
-                type="button"
-                class="board-pos"
-                id="c22"
-                style="border-bottom-right-radius: 50px"
-            >
-                X
-            </button>
-        </div>
-        <button type="button" class="new-game-btn">NEW GAME</button>
-        <script src="script.js"></script>
+        <script defer src="script.js"></script>
+
+        <main class="app">
+            <div class="scoreboard">
+                <p class="score__label score__label--0">player 1 score:</p>
+                <p class="score__value score__value--0">0</p>
+                <p class="score__label score__label--1">player 2 score:</p>
+                <p class="score__value score__value--1">0</p>
+            </div>
+
+            <p class="message__value">this is a message!</p>
+
+            <div class="board">
+                <button type="button" class="board__btn pos--x-0 pos--y-0">
+                    X
+                </button>
+                <button type="button" class="board__btn pos--x-1 pos--y-0">
+                    O
+                </button>
+                <button type="button" class="board__btn pos--x-2 pos--y-0">
+                    X
+                </button>
+                <button type="button" class="board__btn pos--x-0 pos--y-1">
+                    O
+                </button>
+                <button type="button" class="board__btn pos--x-1 pos--y-1">
+                    X
+                </button>
+                <button type="button" class="board__btn pos--x-2 pos--y-1">
+                    O
+                </button>
+                <button type="button" class="board__btn pos--x-0 pos--y-2">
+                    X
+                </button>
+                <button type="button" class="board__btn pos--x-1 pos--y-2">
+                    O
+                </button>
+                <button type="button" class="board__btn pos--x-2 pos--y-2">
+                    X
+                </button>
+            </div>
+
+            <button type="button" class="new-game__btn">new game</button>
+        </main>
     </body>
 </html>
