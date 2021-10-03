@@ -3,10 +3,11 @@ const btnNewGame = document.querySelector(".new-game__btn");
 const labelMessage = document.querySelector(".message__label");
 const valueScores = [...document.querySelectorAll(".score__value")];
 
+const playerValues = ["X", "O"];
 const boardLength = 3;
 const gameWinningLength = 3;
 
-let guiBoard, localBoard, scores;
+let guiBoard, localBoard, currentPlayer, scores;
 
 const createBoard = function (length = 3) {
     containerBoard.replaceChildren();
@@ -44,19 +45,44 @@ const createBoard = function (length = 3) {
     guiBoard = [...document.querySelectorAll(".board__btn")];
 };
 
-const updateScores = (player) => {
-    if (player + 1) scores[player]++;
+const updateScores = function (player) {
+    if (Number.isFinite(player)) scores[player]++;
     valueScores.forEach((score, i) => (score.textContent = scores[i]));
 };
 
 const updateMessage = (msg) => (labelMessage.textContent = msg);
 
+const updateBoard = function (btn, x, y) {
+    if (localBoard[y][x] === "") {
+        const value = playerValues[currentPlayer];
+        localBoard[y][x] = value;
+        btn.textContent = value;
+
+        currentPlayer = currentPlayer ? 0 : 1;
+        updateMessage(`it is ${playerValues[currentPlayer]}'s turn!`);
+        return;
+    }
+    updateMessage(`that position is occupied!`);
+};
+
+const disableBoard = function () {
+    guiBoard.forEach((btn) => (btn.disabled = true));
+};
+
 const createGame = function () {
+    currentPlayer = 0;
     scores = [0, 0];
 
     createBoard(boardLength);
     updateScores();
-    updateMessage("X has the next turn!");
+    updateMessage("it is x's turn!");
+
+    guiBoard.forEach(function (btn) {
+        const [, xClass, yClass] = [...btn.classList];
+        const x = xClass.slice(xClass.lastIndexOf("-") + 1);
+        const y = yClass.slice(yClass.lastIndexOf("-") + 1);
+        btn.addEventListener("click", updateBoard.bind(btn, btn, x, y));
+    });
 };
 
 createGame();
