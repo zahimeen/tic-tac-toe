@@ -7,12 +7,11 @@ const playerValues = ["X", "O"];
 const boardLength = 3;
 const gameWinningLength = 3;
 
-let guiBoard, localBoard, currentPlayer, scores;
+let guiBoard, localBoard, currentPlayer, scores, playing;
 
 const createBoard = function (length = 3) {
     containerBoard.replaceChildren();
 
-    const board = [];
     const style = `
         max-height: calc(var(--board-max-length) / ${length});
         min-height: calc(var(--board-min-length) / ${length});
@@ -22,6 +21,7 @@ const createBoard = function (length = 3) {
         width: calc(var(--board-length) / ${length});
         font-size: calc(var(--board-min-length) / ${length + 0.5});
     `;
+    const board = [];
 
     for (let y = 0; y < length; y++) {
         board.push([]);
@@ -45,17 +45,17 @@ const createBoard = function (length = 3) {
     guiBoard = [...document.querySelectorAll(".board__btn")];
 };
 
+const updateMessage = (msg) => (labelMessage.textContent = msg);
+
 const updateScores = function (player) {
     if (Number.isFinite(player)) scores[player]++;
     valueScores.forEach((score, i) => (score.textContent = scores[i]));
 };
 
-const updateMessage = (msg) => (labelMessage.textContent = msg);
-
-const updateBoard = function (btn, x, y) {
-    if (localBoard[y][x] === "") {
+const updateBoard = function (btn, xCoords, yCoords) {
+    if (localBoard[yCoords][xCoords] === "") {
         const value = playerValues[currentPlayer];
-        localBoard[y][x] = value;
+        localBoard[yCoords][xCoords] = value;
         btn.textContent = value;
 
         currentPlayer = currentPlayer ? 0 : 1;
@@ -65,11 +65,24 @@ const updateBoard = function (btn, x, y) {
     updateMessage(`that position is occupied!`);
 };
 
-const disableBoard = function () {
+const toggleBoardFunctionality = function () {
+    if (playing) {
+        guiBoard.forEach((btn) => {
+            const [, xCoords, yCoords] = [...btn.classList].map((coordClass) =>
+                coordClass.slice(coordClass.lastIndexOf("-") + 1),
+            );
+            btn.addEventListener(
+                "click",
+                updateBoard.bind(btn, btn, xCoords, yCoords),
+            );
+        });
+        return;
+    }
     guiBoard.forEach((btn) => (btn.disabled = true));
 };
 
 const createGame = function () {
+    playing = true;
     currentPlayer = 0;
     scores = [0, 0];
 
@@ -77,14 +90,8 @@ const createGame = function () {
     updateScores();
     updateMessage("it is x's turn!");
 
-    guiBoard.forEach(function (btn) {
-        const [, xClass, yClass] = [...btn.classList];
-        const x = xClass.slice(xClass.lastIndexOf("-") + 1);
-        const y = yClass.slice(yClass.lastIndexOf("-") + 1);
-        btn.addEventListener("click", updateBoard.bind(btn, btn, x, y));
-    });
+    toggleBoardFunctionality();
 };
-
 createGame();
 
 btnNewGame.addEventListener("click", createGame);
