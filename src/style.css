@@ -68,6 +68,11 @@ body {
     border: 10px solid var(--bg);
 }
 
+.board__btn--highlight,
+.board__btn--highlight:hover {
+    background-color: var(--green);
+}
+
 .scoreboard {
     display: flex;
     justify-content: center;
