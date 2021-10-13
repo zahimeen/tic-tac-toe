@@ -1,6 +1,7 @@
 # Tic Tac Toe
 
-## ![](./images/20210911_17h53m20s_grim.png)
+## ![](./images/default-screen.png)
+## ![](./images/played.png)
 
 # About
 
