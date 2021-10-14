@@ -20,4 +20,4 @@ A project like this came about into my head while I was learning JavaScript. I t
 
 ## License
 
-[MIT License](./LICENSE)
+[MIT License](./LICENSE.md)
