@@ -36,10 +36,10 @@ const createBoard = function(length) {
 			localBoard[y].push("");
 
 			const btnHTML = `
-                <button 
-                    type="button" 
+                <button
+                    type="button"
                     class="board__btn pos--x-${x} pos--y-${y}"
-                    style="${style}" 
+                    style="${style}"
                 ></button>
             `;
 			containerBoard.insertAdjacentHTML("beforeend", btnHTML);
